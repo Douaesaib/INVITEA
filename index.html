@@ -371,8 +371,10 @@
         <button class="submit-btn" onclick="submitRSVP()">Confirmer &rarr;</button>
       </div>
       <div class="success-msg" id="success-msg">
-        <span class="s-emoji">💌</span>
-        <p id="success-text">Merci&nbsp;! <span class="success-sub">Nous vous enverrons bientôt plus de détails.</span></p>
+        <div id="success-emoji" style="font-size:2.8rem; margin-bottom:14px;">💌</div>
+        <p id="success-main" style="font-family:var(--font-cursive); font-size:clamp(1.6rem,6vw,2.1rem); color:var(--gold); line-height:1.35; margin-bottom:10px;"></p>
+        <p id="success-sub"  style="font-family:var(--font-elegant); font-size:1rem; font-style:italic; color:var(--latte); line-height:1.7;"></p>
+        <div style="margin:18px auto 0; width:40%; height:1px; background:linear-gradient(90deg,transparent,rgba(184,150,46,0.45),transparent);"></div>
       </div>
     </div>
   </section>
@@ -459,17 +461,54 @@ function selectRSVP(c){
 function submitRSVP(){
   var nameEl=document.getElementById('rsvp-name');
   var name=nameEl.value.trim();
-  if(!name){nameEl.focus();nameEl.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--gold');setTimeout(function(){nameEl.style.borderColor='';},2000);return;}
-  if(!rsvpChoice)return;
-  var guests=document.getElementById('rsvp-guests').value||1;
-  document.getElementById('rsvp-form-wrap').style.display='none';
-  var txt=document.getElementById('success-text');
-  if(rsvpChoice==='no'){
-    txt.innerHTML='Merci <strong>'+name+'</strong> pour votre réponse.<span class="success-sub">Vous nous manquerez.</span>';
-  } else {
-    txt.innerHTML='Merci <strong>'+name+'</strong>, nous sommes ravis de vous compter parmi nous&nbsp;!<span class="success-sub">Nous vous enverrons bientôt plus de détails.</span>';
+  if(!name){
+    nameEl.focus();
+    nameEl.style.borderColor='#b8962e';
+    nameEl.placeholder='Veuillez entrer votre nom...';
+    setTimeout(function(){nameEl.style.borderColor=''; nameEl.placeholder='Prénom Nom';},2500);
+    return;
   }
-  document.getElementById('success-msg').style.display='block';
+  if(!rsvpChoice){
+    document.getElementById('btn-yes').style.borderColor='#b8962e';
+    setTimeout(function(){document.getElementById('btn-yes').style.borderColor='';},2500);
+    return;
+  }
+
+  /* Hide form with fade */
+  var form=document.getElementById('rsvp-form-wrap');
+  form.style.transition='opacity 0.5s ease';
+  form.style.opacity='0';
+  setTimeout(function(){
+    form.style.display='none';
+
+    /* Build message */
+    var mainEl=document.getElementById('success-main');
+    var subEl =document.getElementById('success-sub');
+    var emojiEl=document.getElementById('success-emoji');
+
+    if(rsvpChoice==='yes'){
+      emojiEl.textContent='🌹';
+      mainEl.textContent='Merci, '+name+' !';
+      subEl.innerHTML='Nous sommes touchés par votre présence.<br>Chaymae & Abderahim ont hâte de vous voir<br>le <strong>2 Janvier 2027</strong> à Palais Mesk Lil. 🤍';
+    } else {
+      emojiEl.textContent='🕊️';
+      mainEl.textContent='Merci, '+name+' !';
+      subEl.innerHTML='Nous comprenons et vous remercions<br>d\'avoir pris le temps de répondre.<br>Vous nous manquerez. 💛';
+    }
+
+    /* Show with animation */
+    var msg=document.getElementById('success-msg');
+    msg.style.display='block';
+    msg.style.opacity='0';
+    msg.style.transform='translateY(20px)';
+    msg.style.transition='opacity 0.8s ease, transform 0.8s ease';
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        msg.style.opacity='1';
+        msg.style.transform='translateY(0)';
+      });
+    });
+  },500);
 }
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&!opened)openEnvelope();});
 </script>
