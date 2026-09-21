@@ -6,7 +6,7 @@
   <title>Chaymae &amp; Abderahim — Invitation de Mariage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&family=Scheherazade+New:wght@400;700&family=WindSong:wght@400;500&family=Mea+Culpa&family=Pinyon+Script&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ivory:      #fdfaf4;
@@ -15,10 +15,10 @@
       --nude-dark:  #d5c0a5;
       --mushroom:   #a8957e;
       --latte:      #8c7055;
-      --gold:       #b8962e;   /* ← couleur accent principale */
+      --gold:       #b8962e;
       --gold-dark:  #8a6e1c;
-      --ink:        #2c1f0e;   /* ← texte foncé */
-      --font-cursive:  'Great Vibes', Georgia, serif;
+      --ink:        #2c1f0e;
+      --font-cursive:  'Mea Culpa', 'WindSong', cursive;
       --font-elegant:  'Cormorant Garamond', Georgia, serif;
       --font-arabic:   'Amiri', serif;
       --font-body:     'Lato', Arial, sans-serif;
@@ -41,7 +41,6 @@
     #envelope-scene {
       position: fixed; inset: 0; z-index: 100;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      /* Satin background: layered radial gradients on warm beige */
       background:
         radial-gradient(ellipse 160% 80% at 15% 25%, rgba(255,252,240,0.60) 0%, transparent 55%),
         radial-gradient(ellipse 100% 60% at 85% 15%, rgba(255,248,220,0.45) 0%, transparent 50%),
@@ -66,7 +65,8 @@
       width: 76%; padding: 20px 16px; background: var(--ivory);
       border: 1px solid rgba(184,150,46,0.30); border-radius: 4px; text-align: center; z-index: 2;
       box-shadow: 0 -2px 10px rgba(184,150,46,0.15);
-      transition: transform 0.7s cubic-bezier(0.34,1.1,0.64,1) 0.32s;
+      /* Hna zedna f lwaqt dial tlou3 dyal l'wriqa bash tji bshwiya (1.5s) */
+      transition: transform 1.5s ease-in-out;
     }
     .env-inner-card.rise { transform: translateX(-50%) translateY(-24%); }
     .env-inner-card-text { font-family: var(--font-cursive); font-size: clamp(1rem,4vw,1.3rem); color: var(--gold); line-height: 1.55; }
@@ -75,19 +75,18 @@
     .env-flap {
       position: absolute; inset: 0;
       transform-style: preserve-3d;
-      transition: transform 0.85s cubic-bezier(0.42,0,0.18,1.02);
+      /* Hna redinaha 2.5 secondes bash l'bab yethal b t9oulia w yban pro */
+      transition: transform 2.5s ease-in-out;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12)) drop-shadow(0 8px 20px rgba(0,0,0,0.08));
     }
-    /* front face — floral texture, fixed so all flaps align perfectly into one sheet */
     .env-flap::before {
       content: ''; position: absolute; inset: 0;
-      background-image: url('bg-floral.jpg');
+      background-image: url('envelope-cover.JPG');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       backface-visibility: hidden;
     }
-    /* back face (visible when flap flips open) — plain warm ivory */
     .env-flap::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, #f5ede0 0%, #ede0cc 60%, #e0ccb0 100%);
@@ -114,31 +113,16 @@
     .env-flap-right::after { transform: rotateY(180deg); }
     #envelope-wrap.open .env-flap-right { transform: rotateY(178deg); }
 
-    /* ── Wax seal — gold tones ── */
-    .wax-seal {
+    /* ── Wax seal — Image (PNG avec fond transparent) ── */
+    .wax-seal-img {
       position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      z-index: 20; width: 80px; height: 80px; border-radius: 50%;
-      background:
-        radial-gradient(ellipse 30% 16% at 34% 28%, rgba(255,255,255,0.45) 0%, transparent 100%),
-        radial-gradient(ellipse 18% 12% at 65% 58%, rgba(255,255,255,0.18) 0%, transparent 100%),
-        radial-gradient(circle at 44% 40%, #f0cc6e 0%, #c9a84c 22%, #9a7020 40%, #7d5f12 58%, #5a4208 80%, #3a2800 100%);
-      box-shadow:
-        0 0 0 2px rgba(184,150,46,0.45), 0 0 0 4px rgba(184,150,46,0.18),
-        0 6px 22px rgba(100,70,10,0.45), 0 2px 6px rgba(100,70,10,0.30),
-        inset 0 -4px 10px rgba(60,40,0,0.50), inset 0 3px 7px rgba(255,240,180,0.35);
+      z-index: 20; width: 200px; height: auto;
+      cursor: pointer;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25)) drop-shadow(0 2px 4px rgba(0,0,0,0.15));
       transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
     }
-    .wax-seal::before {
-      content: ''; position: absolute; inset: 8px; border-radius: 50%;
-      border: 1.5px solid rgba(184,150,46,0.50);
-      box-shadow: inset 0 1px 3px rgba(60,40,0,0.40), 0 1px 1px rgba(255,240,180,0.30);
-    }
-    .wax-seal.dissolve { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    .wax-seal-text {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-elegant); font-size: 0.82rem; font-style: italic;
-      color: rgba(255,245,200,0.85); letter-spacing: 0.1em;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    .wax-seal-img.dissolve {
+      opacity: 0; transform: translate(-50%, -50%) scale(0.8);
     }
 
     /* ── Main content ── */
@@ -263,9 +247,7 @@
         <div class="env-flap env-flap-left"></div>
         <div class="env-flap env-flap-right"></div>
       </div>
-      <div class="wax-seal" id="wax-seal">
-        <div class="wax-seal-text">C &amp; A</div>
-      </div>
+      <img src="seal.png" id="wax-seal" class="wax-seal-img" alt="Wax Seal">
     </div>
   </div>
 </div>
@@ -320,7 +302,6 @@
 
   <!-- Countdown -->
   <section class="countdown-section page-wrap appear">
-    <p class="section-label" style="text-align:center;">Compte à rebours</p>
     <div class="countdown-grid">
       <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><span class="cd-label">Jours</span></div>
       <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">Heures</span></div>
@@ -380,7 +361,7 @@
   </section>
 
   <footer class="footer page-wrap appear">
-    <p class="footer-text">Chaymae &amp; Abderahim &mdash; 2 Janvier 2026</p>
+    <p class="footer-text">Chaymae &amp; Abderahim &mdash; 2 Janvier 2027</p>
     <p class="footer-hearts">♡ &ensp; ♡ &ensp; ♡</p>
     <p class="footer-arabic">بارك الله لكما وبارك عليكما وجمع بينكما في خير</p>
   </footer>
@@ -399,7 +380,7 @@ function spawnPetals(){
   }
 }
 
-/* Envelope open */
+/* Envelope open - Animations lentes et professionnelles */
 var opened=false;
 function openEnvelope(){
   if(opened)return; opened=true;
@@ -408,9 +389,17 @@ function openEnvelope(){
   var seal=document.getElementById('wax-seal');
   var scene=document.getElementById('envelope-scene');
   var main=document.getElementById('main-content');
-  setTimeout(function(){ if(seal)seal.classList.add('dissolve'); },80);
-  setTimeout(function(){ if(wrap)wrap.classList.add('open'); },260);
-  setTimeout(function(){ if(card)card.classList.add('rise'); },820);
+  
+  /* L'cachet kayghber */
+  setTimeout(function(){ if(seal)seal.classList.add('dissolve'); }, 100);
+  
+  /* L'bab kayt7el bshwiya (b sor3a d 2.5s lli 9adit f CSS) */
+  setTimeout(function(){ if(wrap)wrap.classList.add('open'); }, 400);
+  
+  /* L'wriqa kat-tla3 morama kayt7el l'bab */
+  setTimeout(function(){ if(card)card.classList.add('rise'); }, 2000);
+  
+  /* L'enveloppe kamla katmshi w kiban l'contenu */
   setTimeout(function(){
     scene.classList.add('fade-out');
     setTimeout(function(){
@@ -418,11 +407,11 @@ function openEnvelope(){
       main.classList.add('visible');
       requestAnimationFrame(function(){ requestAnimationFrame(function(){ main.classList.add('fade-in'); }); });
       initObserver(); setTimeout(showVisible,100); spawnPetals();
-    },1000);
-  },1300);
+    }, 1200);
+  }, 3500);
 }
 
-/* Countdown → 2 Jan 2026 18:00 Larache (UTC+1) */
+/* Countdown → 2 Jan 2027 18:00 (UTC+1) */
 var weddingDate=new Date('2027-01-02T18:00:00+01:00');
 function tick(){
   var diff=weddingDate-new Date();
