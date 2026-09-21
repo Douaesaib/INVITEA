@@ -60,22 +60,26 @@
       background: #dfd0b8;
       box-shadow: inset 0 2px 15px rgba(184,150,46,0.15);
     }
+    
+    /* ── Inner Card (L'wriqa) ── */
     .env-inner-card {
-      position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
-      width: 76%; padding: 20px 16px; background: var(--ivory);
-      border: 1px solid rgba(184,150,46,0.30); border-radius: 4px; text-align: center; z-index: 2;
-      box-shadow: 0 -2px 10px rgba(184,150,46,0.15);
-      /* Hna zedna f lwaqt dial tlou3 dyal l'wriqa bash tji bshwiya (1.5s) */
-      transition: transform 1.5s ease-in-out;
+      position: absolute; 
+      top: 55%; 
+      left: 50%; 
+      transform: translate(-50%, 0);
+      width: 100%; 
+      text-align: center; 
+      z-index: 2;
+      transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .env-inner-card.rise { transform: translateX(-50%) translateY(-24%); }
-    .env-inner-card-text { font-family: var(--font-cursive); font-size: clamp(1rem,4vw,1.3rem); color: var(--gold); line-height: 1.55; }
+    .env-inner-card.rise { 
+      transform: translate(-50%, -100%); 
+    }
 
     #env-flaps { position: absolute; inset: 0; z-index: 10; pointer-events: none; }
     .env-flap {
       position: absolute; inset: 0;
       transform-style: preserve-3d;
-      /* Hna redinaha 2.5 secondes bash l'bab yethal b t9oulia w yban pro */
       transition: transform 2.5s ease-in-out;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12)) drop-shadow(0 8px 20px rgba(0,0,0,0.08));
     }
@@ -239,7 +243,35 @@
   <div class="env-perspective">
     <div class="envelope-wrap" id="envelope-wrap" onclick="openEnvelope()">
       <div class="env-body" id="env-body">
-        <div class="env-inner-card" id="env-inner-card" style="display:none;"></div>
+        
+        <!-- L'wriqa li kat-tla3 f l'west -->
+        <div class="env-inner-card" id="env-inner-card">
+            <div style="display: flex; justify-content: center; margin-bottom: 12px; color: var(--gold); opacity: 0.9;">
+              <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 10v12" />
+                <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H14c-1.5 0-3-1-4-1" />
+                <path d="M3 22h4" />
+                <circle cx="15" cy="3" r="1" />
+                <circle cx="7" cy="5" r="2" />
+                <circle cx="11" cy="15" r="1.5" />
+              </svg>
+            </div>
+            
+            <p style="font-family: var(--font-cursive); font-size: 2.6rem; color: var(--gold); margin-bottom: 0px; line-height: 1;">
+              Vous êtes
+            </p>
+            <p style="font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink); margin-bottom: 25px;">
+              Cordialement Invités
+            </p>
+            
+            <p style="font-family: 'Scheherazade New', var(--font-arabic); font-size: 2.2rem; color: var(--gold); line-height: 1; direction: rtl; margin-bottom: 5px;">
+              أنتم مدعوون
+            </p>
+            <p style="font-family: var(--font-arabic); font-size: 1.2rem; color: var(--ink); direction: rtl;">
+              بكل سرور
+            </p>
+        </div>
+
       </div>
       <div id="env-flaps">
         <div class="env-flap env-flap-top"></div>
@@ -380,7 +412,7 @@ function spawnPetals(){
   }
 }
 
-/* Envelope open - Animations lentes et professionnelles */
+/* Envelope open - Transition fluide sans attente (Crossfade) */
 var opened=false;
 function openEnvelope(){
   if(opened)return; opened=true;
@@ -390,25 +422,33 @@ function openEnvelope(){
   var scene=document.getElementById('envelope-scene');
   var main=document.getElementById('main-content');
   
-  /* L'cachet kayghber */
+  /* 1. L'cachet kayghber */
   setTimeout(function(){ if(seal)seal.classList.add('dissolve'); }, 100);
   
-  /* L'bab kayt7el bshwiya (b sor3a d 2.5s lli 9adit f CSS) */
-  setTimeout(function(){ if(wrap)wrap.classList.add('open'); }, 400);
+  /* 2. L'bab kayt7el bshwiya */
+  setTimeout(function(){ if(wrap)wrap.classList.add('open'); }, 300);
   
-  /* L'wriqa kat-tla3 morama kayt7el l'bab */
-  setTimeout(function(){ if(card)card.classList.add('rise'); }, 2000);
+  /* 3. L'wriqa kat-tla3 */
+  setTimeout(function(){ if(card)card.classList.add('rise'); }, 1800);
   
-  /* L'enveloppe kamla katmshi w kiban l'contenu */
+  /* 4. Nwejdou l'invitation w nkhliwha tban THT l'enveloppe 9bel matmshi (Crossfade) */
+  setTimeout(function(){
+    main.classList.add('visible');
+    requestAnimationFrame(function(){ 
+      requestAnimationFrame(function(){ 
+        main.classList.add('fade-in'); 
+        initObserver(); setTimeout(showVisible, 50); spawnPetals();
+      }); 
+    });
+  }, 2400); 
+
+  /* 5. L'enveloppe katghber bshwiya w kiban dakshi li ta7tha bla t3tal (bla page beige) */
   setTimeout(function(){
     scene.classList.add('fade-out');
     setTimeout(function(){
       scene.style.display='none';
-      main.classList.add('visible');
-      requestAnimationFrame(function(){ requestAnimationFrame(function(){ main.classList.add('fade-in'); }); });
-      initObserver(); setTimeout(showVisible,100); spawnPetals();
-    }, 1200);
-  }, 3500);
+    }, 1000);
+  }, 2700);
 }
 
 /* Countdown → 2 Jan 2027 18:00 (UTC+1) */
