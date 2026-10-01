@@ -117,7 +117,7 @@
     .env-flap-right::after { transform: rotateY(180deg); }
     #envelope-wrap.open .env-flap-right { transform: rotateY(178deg); }
 
-    /* ── Wax seal — Image (PNG avec fond transparent) ── */
+    /* ── Wax seal — Image ── */
     .wax-seal-img {
       position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
       z-index: 20; width: 200px; height: auto;
@@ -237,6 +237,9 @@
 <body>
 <div id="petals-container"></div>
 
+<!-- Balise Audio avec le BON nom de fichier : musique.mp3 -->
+<audio id="bg-music" src="musique.mp3" loop preload="auto"></audio>
+
 <!-- ══ ENVELOPE ══ -->
 <div id="envelope-scene">
   <p class="scene-caption">Vous êtes cordialement invités</p>
@@ -246,30 +249,24 @@
         
         <!-- L'wriqa li kat-tla3 f l'west -->
         <div class="env-inner-card" id="env-inner-card">
-            <div style="display: flex; justify-content: center; margin-bottom: 12px; color: var(--gold); opacity: 0.9;">
-              <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 10v12" />
-                <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H14c-1.5 0-3-1-4-1" />
-                <path d="M3 22h4" />
-                <circle cx="15" cy="3" r="1" />
-                <circle cx="7" cy="5" r="2" />
-                <circle cx="11" cy="15" r="1.5" />
-              </svg>
-            </div>
-            
-            <p style="font-family: var(--font-cursive); font-size: 2.6rem; color: var(--gold); margin-bottom: 0px; line-height: 1;">
-              Vous êtes
-            </p>
-            <p style="font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink); margin-bottom: 25px;">
-              Cordialement Invités
-            </p>
-            
-            <p style="font-family: 'Scheherazade New', var(--font-arabic); font-size: 2.2rem; color: var(--gold); line-height: 1; direction: rtl; margin-bottom: 5px;">
-              أنتم مدعوون
-            </p>
-            <p style="font-family: var(--font-arabic); font-size: 1.2rem; color: var(--ink); direction: rtl;">
-              بكل سرور
-            </p>
+          <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+            <!-- L'Logo Jdid dyalek C&A -->
+            <img src="logo.png" alt="Logo C & A" style="width: 140px; height: auto; opacity: 0.95; mix-blend-mode: multiply;">
+          </div>
+          
+          <p style="font-family: var(--font-cursive); font-size: 2.6rem; color: var(--gold); margin-bottom: 0px; line-height: 1;">
+            Vous êtes
+          </p>
+          <p style="font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink); margin-bottom: 25px;">
+            Cordialement Invités
+          </p>
+          
+          <p style="font-family: 'Scheherazade New', var(--font-arabic); font-size: 2.2rem; color: var(--gold); line-height: 1; direction: rtl; margin-bottom: 5px;">
+            أنتم مدعوون
+          </p>
+          <p style="font-family: var(--font-arabic); font-size: 1.2rem; color: var(--ink); direction: rtl;">
+            بكل سرور
+          </p>
         </div>
 
       </div>
@@ -365,32 +362,7 @@
     <div class="thin-line"></div>
   </div>
 
-  <!-- Page 3 : RSVP -->
-  <section class="rsvp-section page-wrap appear">
-    <div class="rsvp-card">
-      <h2 class="rsvp-title">Confirmer votre présence</h2>
-      <div id="rsvp-form-wrap">
-        <div class="form-group">
-          <label class="form-label" for="rsvp-name">Votre Nom Complet</label>
-          <input class="form-input" type="text" id="rsvp-name" placeholder="Prénom Nom" autocomplete="name" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Présence</label>
-          <div class="rsvp-toggle">
-            <button class="rsvp-btn" id="btn-yes" onclick="selectRSVP('yes')">Je serai présent(e)</button>
-            <button class="rsvp-btn" id="btn-no"  onclick="selectRSVP('no')">Je ne pourrai pas</button>
-          </div>
-        </div>
-        <button class="submit-btn" onclick="submitRSVP()">Confirmer &rarr;</button>
-      </div>
-      <div class="success-msg" id="success-msg">
-        <div id="success-emoji" style="font-size:2.8rem; margin-bottom:14px;">💌</div>
-        <p id="success-main" style="font-family:var(--font-cursive); font-size:clamp(1.6rem,6vw,2.1rem); color:var(--gold); line-height:1.35; margin-bottom:10px;"></p>
-        <p id="success-sub"  style="font-family:var(--font-elegant); font-size:1rem; font-style:italic; color:var(--latte); line-height:1.7;"></p>
-        <div style="margin:18px auto 0; width:40%; height:1px; background:linear-gradient(90deg,transparent,rgba(184,150,46,0.45),transparent);"></div>
-      </div>
-    </div>
-  </section>
+  <!-- Page 3 : RSVP section removed -->
 
   <footer class="footer page-wrap appear">
     <p class="footer-text">Chaymae &amp; Abderahim &mdash; 2 Janvier 2027</p>
@@ -412,7 +384,7 @@ function spawnPetals(){
   }
 }
 
-/* Envelope open - Transition fluide sans attente (Crossfade) */
+/* Envelope open - Transition fluide sans attente (Crossfade) avec musique */
 var opened=false;
 function openEnvelope(){
   if(opened)return; opened=true;
@@ -421,6 +393,12 @@ function openEnvelope(){
   var seal=document.getElementById('wax-seal');
   var scene=document.getElementById('envelope-scene');
   var main=document.getElementById('main-content');
+  
+  /* Lancer la musique au clic */
+  var bgMusic = document.getElementById('bg-music');
+  if(bgMusic) {
+      bgMusic.play().catch(function(error){ console.log("Musique blockée par le navigateur", error); });
+  }
   
   /* 1. L'cachet kayghber */
   setTimeout(function(){ if(seal)seal.classList.add('dissolve'); }, 100);
